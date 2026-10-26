@@ -216,3 +216,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Personal Spotify data exports (contain PII: address, payments, IPs)
+Spotify Account Data/
+Spotify Extended Streaming History/
+*.zip
+
+#Local data: raw exports, SQLite DB, Chroma index
+data/
+
+# macOS
+.DS_Store
+
