@@ -30,3 +30,20 @@ Spotify deprecated Audio Features / Recommendations for new apps in 2024-2026, t
 No playlist generation
 No audio feature analysis
 Single user, not multi tenant
+
+# HOW TO RUN
+
+# Setup / How to Run
+
+Requires Python 3.12+.
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # then fill in your keys
+python run.py
+```
+
+Health check: `curl http://127.0.0.1:5001/api/health` → `{"status": "ok"}`
