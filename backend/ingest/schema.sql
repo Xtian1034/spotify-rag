@@ -13,5 +13,18 @@ CREATE TABLE IF NOT EXISTS plays (
     UNIQUE (played_at, artist_name, track_name, source)
 );
 
+CREATE TABLE IF NOT EXISTS artist_tags (
+    artist_name  TEXT NOT NULL,     -- Spotify's spelling, so it joins to plays
+    tag          TEXT NOT NULL,     -- lowercased, e.g. 'indie pop'
+    weight       INTEGER NOT NULL,  -- Last.fm's 0-100 relevance score
+    PRIMARY KEY (artist_name, tag)
+);
+
+CREATE TABLE IF NOT EXISTS lastfm_fetched (
+    artist_name  TEXT PRIMARY KEY,
+    status       TEXT NOT NULL,     -- 'ok' | 'not_found' | 'no_tags'
+    fetched_at   TEXT NOT NULL      -- ISO 8601 UTC
+);
+
 CREATE INDEX IF NOT EXISTS idx_plays_played_at ON plays(played_at);
 CREATE INDEX IF NOT EXISTS idx_plays_artist ON plays(artist_name);
