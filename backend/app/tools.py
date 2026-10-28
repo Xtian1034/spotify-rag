@@ -3,6 +3,7 @@ import sqlite3
 from config import DB_PATH
 
 MIN_MS_PLAYED = 30_000 #plays shorter than 30s count as skips
+SOURCE = "extended"
 
 GRANULARITY_SQL = {
     "month": "substr(played_at, 1, 7)",
@@ -18,8 +19,8 @@ def _connect():
 def _where(start=None, end=None, artist=None, track=None):
     """WHERE clause and its aprams from optional filters. 
     Start/end dates are inclusive dates like 2025-06-01"""
-    clauses = ["ms_played >= ?"]
-    params = [MIN_MS_PLAYED]
+    clauses = ["source = ?", "ms_played >= ?"]
+    params = [SOURCE, MIN_MS_PLAYED]
     if start:
         clauses.append("played_at >= ?")
         params.append(start)
@@ -99,12 +100,12 @@ def search_artists(query, limit=10):
     sql = """
         SELECT artist_name, COUNT(*) AS plays
         FROM plays
-        WHERE artist_name LIKE ?
+        WHERE source = ? AND artist_name LIKE ?
         GROUP BY artist_name
         ORDER BY plays DESC
         LIMIT ?
     """
-    return _query(sql, [f"%{query}%", limit])
+    return _query(sql, [SOURCE, f"%{query}%", limit])
 
 
 
