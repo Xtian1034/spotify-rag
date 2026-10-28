@@ -32,7 +32,7 @@ def parse_file(path):
 
 
 def main():
-    files = sorted(RAW_DIR.glob("StreamingHistory_music_*.json"))
+    files = sorted((RAW_DIR / "account").glob("StreamingHistory_music_*.json"))
     if not files:
         raise SystemExit(f"No StreamingHistory_music_*.json files in {RAW_DIR}")
 
